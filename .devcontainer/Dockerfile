@@ -5,7 +5,7 @@ RUN . /etc/os-release && if [ "${VERSION_CODENAME}" != "bookworm" ]; then exit 1
 
 # Temporary: Upgrade python packages due to mentioned CVEs
 # They are installed by the base image (continuumio/anaconda3) which does not have the patch.
-COPY ./apply_security_patches.sh /tmp/apply_security_patches.sh
+COPY .devcontainer/apply_security_patches.sh /tmp/apply_security_patches.sh
 RUN chmod +x /tmp/apply_security_patches.sh
 RUN /tmp/apply_security_patches.sh
 
@@ -23,9 +23,6 @@ COPY --chown=:conda --chmod=775 --from=upstream /opt/conda /opt/conda
 RUN chmod =2775 /opt/conda
 
 USER root
-
-# Copy scripts to execute
-COPY add-notice.sh /tmp/library-scripts/
 
 # Setup conda to mirror contents from https://github.com/ContinuumIO/docker-images/blob/master/anaconda3/debian/Dockerfile
 ENV LANG=C.UTF-8 \
@@ -54,18 +51,16 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
         subversion \
         wget \
     && apt-get upgrade -y \
-    && bash /tmp/library-scripts/add-notice.sh \
     && ln -s /opt/conda/etc/profile.d/conda.sh /etc/profile.d/conda.sh \
     && echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc \
     && echo "conda activate base" >> ~/.bashrc \
-    && apt-get clean -y && rm -rf /var/lib/apt/lists/* /tmp/library-scripts/add-notice.sh
+    && apt-get clean -y && rm -rf /var/lib/apt/lists/*
 
 # Copy environment.yml (if found) to a temp location so we can update the environment. Also
 # copy "noop.txt" so the COPY instruction does not fail if no environment.yml exists.
 # COPY environment.yml* .devcontainer/noop.txt /tmp/conda-tmp/
-COPY environment.yml* noop.txt /tmp/conda-tmp/
-RUN if [ -f "/tmp/conda-tmp/environment.yml" ]; then umask 0002 && /opt/conda/bin/conda env update -n base -f /tmp/conda-tmp/environment.yml; fi \
-    && rm -rf /tmp/conda-tmp
+COPY environment.yml* .devcontainer/noop.txt /tmp/conda-tmp/
+RUN if [ -f "/tmp/conda-tmp/environment.yml" ]; then umask 0002 && /opt/conda/bin/conda env update -n base -f /tmp/conda-tmp/environment.yml; fi 
 
 # [Optional] Uncomment this section to install additional OS packages.
 # RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
