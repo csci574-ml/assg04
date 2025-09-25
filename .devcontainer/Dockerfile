@@ -25,10 +25,11 @@ RUN chmod =2775 /opt/conda
 USER root
 
 # Setup conda to mirror contents from https://github.com/ContinuumIO/docker-images/blob/master/anaconda3/debian/Dockerfile
+ARG CONTAINER_WORKSPACE_FOLDER
 ENV LANG=C.UTF-8 \
     LC_ALL=C.UTF-8 \
     PATH=/opt/conda/bin:$PATH \
-    PYTHONPATH=$PYTHONPATH:/workspaces/assg03/src
+    PYTHONPATH=${CONTAINER_WORKSPACE_FOLDER}/src
 ARG USERNAME=vscode
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && apt-get install -y --no-install-recommends \
@@ -60,7 +61,12 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
 # copy "noop.txt" so the COPY instruction does not fail if no environment.yml exists.
 # COPY environment.yml* .devcontainer/noop.txt /tmp/conda-tmp/
 COPY environment.yml* .devcontainer/noop.txt /tmp/conda-tmp/
-RUN if [ -f "/tmp/conda-tmp/environment.yml" ]; then umask 0002 && /opt/conda/bin/conda env update -n base -f /tmp/conda-tmp/environment.yml; fi 
+RUN if [ -f "/tmp/conda-tmp/environment.yml" ]; then umask 0002 && /opt/conda/bin/conda env update -n base -f /tmp/conda-tmp/environment.yml; fi \
+    && rm -rf /tmp/conda-tmp
+
+# Tensorflow doesn't install currently from conda, need to do a separate pip install
+#RUN pip install tensorflow
+#RUN python3 -m pip install 'tensorflow[and-cuda]'
 
 # [Optional] Uncomment this section to install additional OS packages.
 # RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \

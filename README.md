@@ -1,10 +1,53 @@
 ---
-title: 'Assignment 03: Linear Regression, Learning Curves and Regularization'
+title: 'Assignment 04: Linear Regression, Learning Curves and Regularization'
 author: 'CSci 574: Machine Learning'
 date: ''
 ---
 
+# Description
+
+In this exercise you will be using what you have learned about linear regression, polynomial regression and
+regularization, to explore an artificial dataset.
+
+I have generated a secret dataset.  The dataset uses a polynomial combination of a single parameter.
+The unknown function is no less than degree 2, but no more than a degree 20 polynomial.  Also some random
+noise has also been added into the function, so that fitting it is not a completely trivial or obvious
+exercise.  Since the dataset is generated from a polynomial function, the output labels `y` are
+real valued numbers.  And thus you will be performing a regression fitting task in this assignment.
+
+Your task, should you choose to accept it, is to load and explore the data from this function.  Your ultimate
+goal is to try your best to determine the degree of the polynomial used, and the values of the parameters
+then used in the secret function.  Because of the noise added to the data you are given, you will not be able
+to exactly recover the parameters used to generate the artificial data.  You will even find that determining the
+exact degree of the generating polynomial function is not possible.  How you apply polynomial fitting and 
+regularization techniques can give different and better or worse approximations of the true underlying function.
+
+In the below cells, I give instructions for the tasks you should attempt.  You will need to load the data and
+visualize it to begin with.  Then you will be asked to apply polynomial fitting and regularization in an attempt
+to fit the data.  But ultimately, at the end, you should keep in mind that there is a true function of some
+unknown polynomial degree with some coefficient settings used.  You will later be able to see what the
+true function was and compare your model performance to the true function you are exploring in this
+exercise.
+
+
+**Instructions**:
+
+- You need to use the class development environment and make sure that you are pushing your assignments to your
+  GitHub classroom and they are successfully passing the autograder.
+- Avoid using for-loops and while loops, unless you are explicitly told to do so in the assignment task functions for this assignment.
+- Do not modify the `### TESTED FUNCTION [function name]` cells.  These cells call unit tests on the functions
+  you are asked to write for these assignments.
+- All functions you need to write should be placed into the `src/assignment_tasks.py` file.  Functions that are
+  tested and graded are imported from there into this notebook.
+  - You have not been given function documentation and stub functions for this and future assignment.  You need to
+    add in the function declarations and uncomment the code to import and test your functions.
+  - You are required to give NumPy style formatted Pydoc documentation for your functions.
+- After coding your function, run the `### TESTED FUNCTION` cell to determine if it is passing the assignment
+  unit tests and that your result is correct.
+
 # Objectives
+
+**After this assignment you will**:
 
 - Better understand Linear/Polynomial Regression using standard RMSE cost
 - Get experience with what underfit, overfit and good fitting/generalizing
@@ -19,55 +62,11 @@ date: ''
 - Experince using grid search in `scikit-learn` to explore a parameter space
   such as tuning `alpha` parameters for regularization.
 
-# Description
-
-In this assignment you have been given a set of data 
-(in `data/assg-03-data.csv`) that has been generated using a secret
-polynomial function.  The polynomial used to generate this data has a
-degree of at least 2, but no more than 10, and noise (mean 0, standard
-devaition 0.5) has been added to make it non-trivial to fit a good
-model and recover the parameters used to generate the data.
-
-You will perform several tasks that will walk you through defining and
-fitting linear regression models to fit the noisy data you have been given.
-You will start by creating an obviously underfit  model for the data
-and then a model that should be overfitting the data.  You will create
-a function to display the learning curves that result from training these
-underfit and overfit models on the data.
-
-From these initial models, you should get a feel for what performance a
-good performing model should be able to achieve, and what a good generalizing
-model should look like.  You will then use Lasso and Ridge regularization to
-try and find models that fight the overfitting and obtain good generalization
-performance.
-
 # Overview and Setup
 
 # Assignment Tasks
 
-You should read through and perform the tasks described in the given assignment notebook 
-`notebooks/Assg-03-Regression-Learning-Curves-Regularization.ipynb`.
-In this assignment there are 7 or 8 tasks to complete.  For some tasks you need
-to write and complete a function in the `src/assg_tasks.py` file.  These 
-are the functions where you will create and fit the specified model for
-each of the tasks, and where you will calculate learning curve train and
-test errors for use in the assignment.
-
-Most tasks have associated tests that will be performed on them.  These can
-be run in the assignment iPython notebook, and/or can be run in VSCode using
-the test runner.  You should ensure that your implementations in the
-`src/assg_tasks.py` file are passing tests for a task before moving on to the
-next task.
-
 # Assignment Submission
-
-All work will be submitted and evaluated through GitHub classrooms for this
-assignment.  You should work incrementally.  Each task should be in a separate
-commit.  So you should end up creating and pushing 7 or 8 commits (or more),
-at least one for each task, with only the work that complets that task in
-a commit.  You should check the GitHub Classroom autograder for each commit
-you push to ensure that your work is passing the expected tests for the
-assignment.
 
 # Additional Information
 

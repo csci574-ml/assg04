@@ -3,6 +3,7 @@
 **/.ipynb_checkpoints/*
 *.vagrant/*
 **/_trial_temp/*
+.virtual_documents/*
 
 *.acn
 *.swp
